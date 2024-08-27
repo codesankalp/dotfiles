@@ -117,6 +117,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 export NVM_DIR="$HOME/.nvm"
 export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix golang)/libexec"
