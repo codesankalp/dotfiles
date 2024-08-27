@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# gcloud_ssh.sh - A script for selecting GCP project and zone using fuzzy search, then SSH into a VM.
+
+function gcloud_ssh() {
+    local vm_id=$1
+
+    projects=$(gcloud projects list --format="value(projectId)")
+    project=$(echo "$projects" | fzf --prompt="Select project: ")
+
+    if [[ -z "$project" ]]; then
+        echo "No project selected. Exiting."
+        return 1
+    fi
+
+    zones=$(gcloud compute zones list --filter="status:UP" --format="value(name)" --project="$project")
+    zone=$(echo "$zones" | fzf --prompt="Select zone: ")
+
+    if [[ -z "$zone" ]]; then
+        echo "No zone selected. Exiting."
+        return 1
+    fi
+
+    gcloud compute ssh --zone "$zone" --tunnel-through-iap --project "$project" "$vm_id"
+}
+
+gcloud_ssh "$@"
