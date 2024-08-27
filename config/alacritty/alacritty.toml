@@ -49,7 +49,7 @@ print_events = false
 render_timer = false
 
 [font]
-size = 18
+size = 14
 
 [font.bold]
 family = "Agave"
@@ -606,7 +606,7 @@ save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
-# decorations = "None"
+decorations = "None"
 dynamic_padding = false
 startup_mode = "Maximized"
 
