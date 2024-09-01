@@ -49,7 +49,7 @@ print_events = false
 render_timer = false
 
 [font]
-size = 14
+size = 18
 
 [font.bold]
 family = "Agave Nerd Font"
@@ -200,7 +200,7 @@ key = "Left"
 mods = "Control"
 
 [[keyboard.bindings]]
-chars = "\u001B[1;3D"
+chars = "\u001BB"
 key = "Left"
 mods = "Alt"
 
@@ -225,7 +225,7 @@ key = "Right"
 mods = "Control"
 
 [[keyboard.bindings]]
-chars = "\u001B[1;3C"
+chars = "\u001BF"
 key = "Right"
 mods = "Alt"
 
