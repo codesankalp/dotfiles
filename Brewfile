@@ -45,7 +45,8 @@ brew 'derailed/k9s/k9s'
 brew 'eugenmayer/dockersync/unox'
 
 # Casks
-cask 'alfred'
+cask 'hiddenbar'
+cask 'raycast'
 cask 'docker'
 cask 'firefox'
 cask 'google-chrome'
