@@ -13,13 +13,25 @@ function gcloud_ssh() {
         return 1
     fi
 
-    zones=$(gcloud compute zones list --filter="status:UP" --format="value(name)" --project="$project")
+    zones=$(gcloud compute instances list --filter="status=RUNNING" --format="value(zone)" --project="$project" | sort -u)
     zone=$(echo "$zones" | fzf --prompt="Select zone: ")
 
     if [[ -z "$zone" ]]; then
         echo "No zone selected. Exiting."
         return 1
     fi
+
+    if [[ -z "$vm_id" ]]; then
+        vms=$(gcloud compute instances list --filter="status=RUNNING" --format="value(name)" --project="$project" --zones="$zone")
+        vm_id=$(echo "$vms" | fzf --prompt="Select VM: ")
+
+        if [[ -z "$vm_id" ]]; then
+            echo "No VM selected. Exiting."
+            return 1
+        fi
+    fi
+
+    echo "Connecting to $vm_id in zone $zone of project $project"
 
     gcloud compute ssh --zone "$zone" --tunnel-through-iap --project "$project" "$vm_id"
 }
