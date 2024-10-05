@@ -83,7 +83,6 @@ plugins=(
   zsh-syntax-highlighting
   fast-syntax-highlighting
   zsh-completions
-  zsh-autocomplete
 )
 
 source $ZSH/oh-my-zsh.sh
