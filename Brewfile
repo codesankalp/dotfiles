@@ -4,6 +4,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "derailed/k9s"
 tap "eugenmayer/dockersync"
+tap "hashicorp/tap"
 
 # CLI tools
 brew 'coreutils'
@@ -43,6 +44,8 @@ brew 'kubectx'
 brew 'yq'
 brew 'derailed/k9s/k9s'
 brew 'eugenmayer/dockersync/unox'
+brew 'hashicorp/tap/vault'
+brew 'hashicorp/tap/packer'
 
 # Casks
 cask 'hiddenbar'

@@ -49,11 +49,11 @@ print_events = false
 render_timer = false
 
 [font]
-size = 18
+size = 16
 
 [font.bold]
 family = "Agave Nerd Font"
-style = "Bold"
+style = "Regular"
 
 [font.glyph_offset]
 x = 0

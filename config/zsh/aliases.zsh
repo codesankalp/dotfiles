@@ -99,6 +99,11 @@ if [ -x "$(command -v exa)" ]; then
     alias la="exa --long --all --group"
 fi
 
+if [ -x "$(command -v eza)" ]; then
+    alias ls="eza --icons"
+    alias la="eza --long --icons --all --group"
+fi
+
 # nvim
 alias oldvim="vim"
 alias vi="nvim"
