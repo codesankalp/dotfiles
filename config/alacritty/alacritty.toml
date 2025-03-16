@@ -49,7 +49,7 @@ print_events = false
 render_timer = false
 
 [font]
-size = 16
+size = 18
 
 [font.bold]
 family = "Agave Nerd Font"
@@ -606,7 +606,7 @@ save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
-decorations = "None"
+decorations = "Full"
 dynamic_padding = false
 startup_mode = "Maximized"
 
