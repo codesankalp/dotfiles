@@ -34,8 +34,8 @@ white = "0xd4d4d5"
 yellow = "#df8e1d"
 
 [colors.primary]
-# background = "#ffffff"
-# foreground = "#000000"
+background = "#000000"
+foreground = "#ffffff"
 
 [cursor]
 style = "Underline"
@@ -606,9 +606,11 @@ save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
+decorations_theme_variant = "Dark"
 decorations = "Full"
 dynamic_padding = false
 startup_mode = "Maximized"
+opacity = 0.8
 
 [window.dimensions]
 columns = 0

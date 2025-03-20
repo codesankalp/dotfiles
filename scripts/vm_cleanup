@@ -8,7 +8,7 @@ GCLOUD_PATH="$(which gcloud)"
 LOG_FILE="$HOME/vm_cleanup_logs/vm_cleanup_$(date +\%Y\%m\%d_\%H\%M\%S).log"
 PROJECT_ID="vm-provider-dev"
 ZONE="us-central1-a"
-CREATION_TIME_THRESHOLD="-P0H"
+CREATION_TIME_THRESHOLD="-P3H"
 GREP_PATTERN="vm-"
 GREP_PATTERN_EXCLUDE="gke-"
 
