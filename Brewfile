@@ -60,6 +60,7 @@ cask 'orbstack'
 cask 'alacritty'
 cask 'brave-browser'
 cask 'dbeaver-community'
+cask 'flux-app'
 
 # Fonts
 cask 'font-agave-nerd-font'

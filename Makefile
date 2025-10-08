@@ -20,7 +20,20 @@ tmux:
 .PHONY: nvim
 ## nvim: neovim
 nvim:
-	@ln -fs "$(CURDIR)/config/nvim/" $(CONFIG_PATH);
+	@git clone https://github.com/NvChad/starter ~/.config/nvim && nvim;
+
+.PHONY: nvim-update
+## nvim-update: update neovim config
+nvim-update:
+	@cd $(CONFIG_PATH)/nvim && git pull origin main;
+
+.PHONY: nvim-clean
+## nvim-clean: clean neovim config
+nvim-clean:
+	@rm -rf $(CONFIG_PATH)/nvim;
+	@rm -rf $(HOME)/.local/share/nvim;
+	@rm -rf $(HOME)/.local/state/nvim;
+
 
 .PHONY: zsh
 ## zsh: zsh shell
