@@ -1,7 +1,4 @@
 # Core
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-tap "homebrew/services"
 tap "derailed/k9s"
 tap "eugenmayer/dockersync"
 tap "hashicorp/tap"
@@ -42,15 +39,16 @@ brew 'jq'
 brew 'kubernetes-cli'
 brew 'kubectx'
 brew 'yq'
+brew 'gh'
 brew 'derailed/k9s/k9s'
 brew 'eugenmayer/dockersync/unox'
 brew 'hashicorp/tap/vault'
 brew 'hashicorp/tap/packer'
+brew 'eza'
 
 # Casks
 cask 'hiddenbar'
 cask 'raycast'
-cask 'docker'
 cask 'firefox'
 cask 'google-chrome'
 cask 'slack'
@@ -59,10 +57,9 @@ cask 'vlc'
 cask 'visual-studio-code'
 cask 'hammerspoon'
 cask 'orbstack'
-cask 'beekeeper-studio'
 cask 'alacritty'
 cask 'brave-browser'
-cask 'google-cloud-sdk'
+cask 'dbeaver-community'
 
 # Fonts
 cask 'font-agave-nerd-font'

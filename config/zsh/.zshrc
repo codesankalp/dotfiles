@@ -137,12 +137,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 # added by travis gem
 [ ! -s /Users/sankalp/.travis/travis.sh ] || source /Users/sankalp/.travis/travis.sh
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/sankalp/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/sankalp/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/sankalp/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/sankalp/google-cloud-sdk/completion.zsh.inc'; fi
-
 # bun completions
 [ -s "/Users/sankalp/.bun/_bun" ] && source "/Users/sankalp/.bun/_bun"
 
@@ -155,3 +149,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/dotfiles/scripts:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/sankalp/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/sankalp/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/sankalp/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/sankalp/google-cloud-sdk/completion.zsh.inc'; fi
