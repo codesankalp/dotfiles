@@ -1,7 +1,7 @@
 # Core
-tap "derailed/k9s"
-tap "eugenmayer/dockersync"
-tap "hashicorp/tap"
+tap 'derailed/k9s'
+tap 'eugenmayer/dockersync'
+tap 'hashicorp/tap'
 
 # CLI tools
 brew 'coreutils'
@@ -20,7 +20,7 @@ brew 'the_silver_searcher'
 brew 'ripgrep'
 brew 'asdf'
 brew 'gpg2'
-brew "skopeo"
+brew 'skopeo'
 brew 'git'
 brew 'stow'
 brew 'tree'
@@ -45,6 +45,7 @@ brew 'eugenmayer/dockersync/unox'
 brew 'hashicorp/tap/vault'
 brew 'hashicorp/tap/packer'
 brew 'eza'
+brew 'go-task'
 
 # Casks
 cask 'hiddenbar'
@@ -61,6 +62,7 @@ cask 'alacritty'
 cask 'brave-browser'
 cask 'dbeaver-community'
 cask 'flux-app'
+cask 'caffeine'
 
 # Fonts
 cask 'font-agave-nerd-font'
