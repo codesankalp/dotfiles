@@ -46,6 +46,7 @@ brew 'hashicorp/tap/vault'
 brew 'hashicorp/tap/packer'
 brew 'eza'
 brew 'go-task'
+brew 'helm'
 
 # Casks
 cask 'hiddenbar'
