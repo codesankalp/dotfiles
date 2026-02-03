@@ -125,3 +125,39 @@ print_submodules_in_dir () {
 alias ghtoken="cat ~/.ghtoken | pbcopy"
 alias dive="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_API_VERSION=1.37 wagoodman/dive:latest"
 
+# Function to manage AI prompts
+prompts() {
+  local prompt_dir="$HOME/dotfiles/prompts"
+
+  if [ -z "$1" ]; then
+    if ! command -v fzf &> /dev/null; then
+      echo "Available prompts in $prompt_dir:"
+      ls "$prompt_dir"
+      return
+    fi
+    
+    local selected_prompt=$(ls "$prompt_dir" | fzf --height 40% --layout=reverse --border --prompt="Select AI Prompt > ")
+    
+    if [ -n "$selected_prompt" ]; then
+      cat "$prompt_dir/$selected_prompt" | pbcopy
+      echo "✅ Prompt '$selected_prompt' copied to clipboard!"
+    fi
+    return
+  fi
+
+  local prompt_file="$prompt_dir/$1"
+  
+  # Check if file exists exactly as typed, or try adding .md extension
+  if [ ! -f "$prompt_file" ] && [ -f "$prompt_file.md" ]; then
+    prompt_file="$prompt_file.md"
+  fi
+
+  if [ -f "$prompt_file" ]; then
+    cat "$prompt_file" | pbcopy
+    echo "✅ Prompt '$(basename "$prompt_file")' copied to clipboard!"
+  else
+    echo "❌ Prompt not found: $1"
+    echo "Available prompts:"
+    ls "$prompt_dir"
+  fi
+}

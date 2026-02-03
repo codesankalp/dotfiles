@@ -50,4 +50,9 @@ git:
 .PHONY: wakatime
 ## wakatime: wakatime
 wakatime:
-	@ln -fs "$(CURDIR)/config/wakatime/.wakatime.cfg" $(HOME)/.wakatime.cfg;
+	@cp "$(CURDIR)/config/wakatime/.wakatime.cfg" $(HOME)/.wakatime.cfg;
+	@if grep -q "YOUR_WAKATIME_API_KEY" $(HOME)/.wakatime.cfg; then \
+		read -p "Enter WakaTime API Key: " key; \
+		sed -i '' "s/YOUR_WAKATIME_API_KEY/$$key/" $(HOME)/.wakatime.cfg; \
+		echo "WakaTime API key configured in $(HOME)/.wakatime.cfg"; \
+	fi
