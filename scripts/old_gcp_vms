@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Script to list GCP VM instances older than specified days as a Python array
+# Usage: ./list_vms.sh [days] [project]
+# Example: ./list_vms.sh 30 vm-provider
+
+# Set defaults
+DAYS=${1:-30}
+PROJECT=${2:-vm-provider}
+
+# Validate that DAYS is a number
+if ! [[ "$DAYS" =~ ^[0-9]+$ ]]; then
+    echo "Error: Days must be a positive integer" >&2
+    echo "Usage: $0 [days] [project]" >&2
+    exit 1
+fi
+
+# Function to display usage
+usage() {
+    echo "Usage: $0 [days] [project]"
+    echo "  days    - Number of days to look back (default: 30)"
+    echo "  project - GCP project ID (default: vm-provider)"
+    echo ""
+    echo "Example:"
+    echo "  $0 30 vm-provider"
+    echo "  $0 7"
+    exit 0
+}
+
+# Check for help flag
+if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+    usage
+fi
+
+# Build the filter string
+FILTER="creationTimestamp<'-P${DAYS}D'"
+
+# Run the gcloud command and format as Python array
+echo "Fetching VMs created more than $DAYS days ago from project: $PROJECT" >&2
+
+RESULT=$(gcloud compute instances list \
+  --project="$PROJECT" \
+  --filter="$FILTER" \
+  --format="value(name)" 2>/dev/null | grep 'vm-' | python3 -c "import sys; print([line.strip() for line in sys.stdin])")
+
+# Check if the command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to fetch VM list. Please check:" >&2
+    echo "  - You're authenticated with gcloud" >&2
+    echo "  - Project '$PROJECT' exists and you have access" >&2
+    echo "  - You have compute.instances.list permission" >&2
+    exit 1
+fi
+
+# Output the result
+echo "$RESULT"
+
+# Optionally, you can also save to a variable or file
+# To save to file, uncomment:
+# echo "$RESULT" > vm_list.json
+
+# To get count of VMs, uncomment:
+COUNT=$(echo "$RESULT" | python3 -c "import sys, ast; print(len(ast.literal_eval(sys.stdin.read())))")
+echo "Found $COUNT VMs" >&2
+

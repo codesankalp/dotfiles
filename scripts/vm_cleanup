@@ -7,7 +7,7 @@
 GCLOUD_PATH="$(which gcloud)"
 LOG_FILE="$HOME/vm_cleanup_logs/vm_cleanup_$(date +\%Y\%m\%d_\%H\%M\%S).log"
 PROJECT_ID="vm-provider-dev"
-ZONE="us-central1-a"
+ZONES="us-central1-a,us-central1-b,us-central1-c,us-central1-f"
 CREATION_TIME_THRESHOLD="-P3H"
 GREP_PATTERN="vm-"
 GREP_PATTERN_EXCLUDE="gke-"
@@ -25,26 +25,27 @@ log_message "Starting VM cleanup script"
 
 # Run the cleanup command and log output
 # Get list of VMs to delete
-VM_LIST=$($GCLOUD_PATH compute instances list \
-  --filter="creationTimestamp < $CREATION_TIME_THRESHOLD" \
-  --format="value(name)" \
-  --project=$PROJECT_ID \
-  --zones=$ZONE | grep "$GREP_PATTERN" | grep -v "$GREP_PATTERN_EXCLUDE")
-
-log_message "Found VMs to delete: $VM_LIST"
-
-if [ -n "$VM_LIST" ]; then
-  # Delete VMs in parallel
-  echo "$VM_LIST" | xargs -P 30 -I {} $GCLOUD_PATH compute instances delete {} \
+for zone in $(echo $ZONES | tr ',' ' '); do
+  VM_LIST=$($GCLOUD_PATH compute instances list \
+    --filter="creationTimestamp < $CREATION_TIME_THRESHOLD" \
+    --format="value(name)" \
     --project=$PROJECT_ID \
-    --zone=$ZONE \
-    --quiet >> "$LOG_FILE" 2>&1
-  
-  log_message "Deleted VMs: $VM_LIST"
-else
-  log_message "No VMs found matching criteria"
-fi
+    --zones=$zone | grep "$GREP_PATTERN" | grep -v "$GREP_PATTERN_EXCLUDE")
 
+  log_message "Found VMs to delete ($zone): $VM_LIST"
+
+  if [ -n "$VM_LIST" ]; then
+    # Delete VMs in parallel
+    echo "$VM_LIST" | xargs -P 30 -I {} $GCLOUD_PATH compute instances delete {} \
+      --project=$PROJECT_ID \
+      --zone=$zone \
+      --quiet >> "$LOG_FILE" 2>&1
+
+    log_message "Deleted VMs ($zone): $VM_LIST"
+  else
+    log_message "No VMs found matching criteria ($zone)"
+  fi
+done
 # Log completion
 log_message "VM cleanup script completed"
 
