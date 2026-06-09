@@ -64,6 +64,8 @@ cask 'brave-browser'
 cask 'dbeaver-community'
 cask 'flux-app'
 cask 'caffeine'
+cask 'shottr'
+cask 'meetingbar'
 
 # Fonts
 cask 'font-agave-nerd-font'
