@@ -158,3 +158,4 @@ if [ -f '/Users/sankalp/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/s
 
 # Added by Antigravity
 export PATH="/Users/sankalp/.antigravity/antigravity/bin:$PATH"
+. "$HOME/.local/bin/env"

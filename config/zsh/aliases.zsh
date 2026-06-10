@@ -87,6 +87,10 @@ alias ys="yarn start"
 #hackerrank
 alias hr="cd ~/dev/hr"
 
+#gitlab
+alias gl="cd ~/dev/gl"
+alias personal="cd ~/dev/personal"
+
 if [ -x "$(command -v colorls)" ]; then
     # sudo gem install colorls
     alias ls="colorls"

@@ -56,3 +56,9 @@ wakatime:
 		sed -i '' "s/YOUR_WAKATIME_API_KEY/$$key/" $(HOME)/.wakatime.cfg; \
 		echo "WakaTime API key configured in $(HOME)/.wakatime.cfg"; \
 	fi
+
+.PHONY: claude
+## claude: claude AI configuration
+claude:
+	@mkdir -p $(HOME)/.claude;
+	@ln -fs "$(CURDIR)/prompts/CLAUDE.md" $(HOME)/.claude/CLAUDE.md;

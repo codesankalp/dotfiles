@@ -36,3 +36,4 @@ make nvim
 make zsh
 make git
 make wakatime
+make claude
