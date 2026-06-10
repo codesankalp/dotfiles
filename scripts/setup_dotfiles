@@ -1,39 +1,57 @@
 #!/bin/bash
+#
+# Bootstrap a fresh macOS machine from this repo.
+# Safe to re-run: every step skips work that is already done.
 
-function setup_oh_my_zsh() {
-    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete
-    git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-completions
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+set -euo pipefail
+
+# Resolve the repo root from this script's location instead of assuming ~/dotfiles.
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+clone_if_missing() {
+    local repo=$1 dest=$2
+    if [ -d "$dest" ]; then
+        echo "Skipping clone, already present: $dest"
+    else
+        git clone --depth=1 "$repo" "$dest"
+    fi
 }
 
-function setup_tmux(){
-    cd
-    git clone https://github.com/gpakosz/.tmux.git
-    ln -s -f .tmux/.tmux.conf
-    cd -
+setup_homebrew() {
+    if ! command -v brew >/dev/null 2>&1; then
+        NONINTERACTIVE=1 /bin/bash -c \
+            "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew bundle install --file="$REPO_DIR/Brewfile"
 }
 
-curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
+setup_oh_my_zsh() {
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c \
+            "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
 
-# Install Homebrew
-cd ~/dotfiles
-brew bundle install
+    clone_if_missing https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
+    clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting"
+    clone_if_missing https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$ZSH_CUSTOM_DIR/plugins/fast-syntax-highlighting"
+    clone_if_missing https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM_DIR/plugins/zsh-autocomplete"
+    clone_if_missing https://github.com/zsh-users/zsh-completions.git "$ZSH_CUSTOM_DIR/plugins/zsh-completions"
+    clone_if_missing https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM_DIR/themes/powerlevel10k"
+}
 
-chsh -s $(which zsh)
+setup_tmux() {
+    clone_if_missing https://github.com/gpakosz/.tmux.git "$HOME/.tmux"
+    ln -sf "$HOME/.tmux/.tmux.conf" "$HOME/.tmux.conf"
+}
 
-# Install Oh My Zsh
+setup_homebrew
 setup_oh_my_zsh
-
-# Install tools
-make alacritty
 setup_tmux
-make tmux
-make nvim
-make zsh
-make git
-make wakatime
-make claude
+make -C "$REPO_DIR" all
+
+if [ "$SHELL" != "$(command -v zsh)" ]; then
+    chsh -s "$(command -v zsh)"
+fi
+
+echo "Done. Open nvim once to finish NvChad plugin installation."

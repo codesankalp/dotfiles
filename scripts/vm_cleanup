@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Script to cleanup old VM instances
-# Deletes VM instances older than 1 day that match the specified pattern
+# Deletes VM instances older than the threshold below (currently 3 hours) that match the pattern
 
 # Log file path
 GCLOUD_PATH="$(which gcloud)"
-LOG_FILE="$HOME/vm_cleanup_logs/vm_cleanup_$(date +\%Y\%m\%d_\%H\%M\%S).log"
+LOG_FILE="$HOME/vm_cleanup_logs/vm_cleanup_$(date +%Y%m%d_%H%M%S).log"
 PROJECT_ID="vm-provider-dev"
 ZONES="us-central1-a,us-central1-b,us-central1-c,us-central1-f"
 CREATION_TIME_THRESHOLD="-P3H"
@@ -29,16 +29,16 @@ for zone in $(echo $ZONES | tr ',' ' '); do
   VM_LIST=$($GCLOUD_PATH compute instances list \
     --filter="creationTimestamp < $CREATION_TIME_THRESHOLD" \
     --format="value(name)" \
-    --project=$PROJECT_ID \
-    --zones=$zone | grep "$GREP_PATTERN" | grep -v "$GREP_PATTERN_EXCLUDE")
+    --project="$PROJECT_ID" \
+    --zones="$zone" | grep "$GREP_PATTERN" | grep -v "$GREP_PATTERN_EXCLUDE")
 
   log_message "Found VMs to delete ($zone): $VM_LIST"
 
   if [ -n "$VM_LIST" ]; then
     # Delete VMs in parallel
-    echo "$VM_LIST" | xargs -P 30 -I {} $GCLOUD_PATH compute instances delete {} \
-      --project=$PROJECT_ID \
-      --zone=$zone \
+    echo "$VM_LIST" | xargs -P 30 -I {} "$GCLOUD_PATH" compute instances delete {} \
+      --project="$PROJECT_ID" \
+      --zone="$zone" \
       --quiet >> "$LOG_FILE" 2>&1
 
     log_message "Deleted VMs ($zone): $VM_LIST"
