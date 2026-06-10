@@ -18,18 +18,19 @@ grep_copy_pod(){
 }
 
 kexec(){
-    # after > $4 is present use it as arguments
+    # kexec <pod-pattern> [-c <container>] [cmd...]
+    local pod
+    pod=$(kpod "$1")
     if [[ "$2" == "-c" ]]; then
-    if [[ "$4" == "" ]]; then
-        echo "kubectl exec -it $(kpod "$1") -c "$3" -- /bin/bash"
-        kubectl exec -it $(kpod "$1") -c "$3" -- /bin/bash
+        local container="$3"
+        if [[ -z "$4" ]]; then
+            kubectl exec -it "$pod" -c "$container" -- /bin/bash
+        else
+            kubectl exec -it "$pod" -c "$container" -- "${@:4}"
+        fi
         return
     fi
-        echo "kubectl exec -it $(kpod "$1") -c "$3" -- $4 $5 $6 $7 $8 $9"
-        kubectl exec -it $(kpod "$1") -c "$3" -- $4 $5 $6 $7 $8 $9
-        return
-    fi
-    kubectl exec -it $(kpod "$1") -- /bin/bash
+    kubectl exec -it "$pod" -- /bin/bash
 }
 
 # Python and Jupyter
@@ -58,8 +59,8 @@ alias gp="git push"
 alias gf="git fetch"
 alias gbr='git checkout $(git branch | fzf --layout=reverse) 2> /dev/null'
 
-# fuzzy search command history
-alias hgrep='cat ~/.zsh_history | fzf'
+# fuzzy search command history (strip the ": <timestamp>:<elapsed>;" prefix, newest first)
+alias hgrep='sed "s/^: [0-9]*:[0-9]*;//" ~/.zsh_history | fzf --tac'
 
 # copy command output via pipe
 alias -g P='| pbcopy'
@@ -91,19 +92,8 @@ alias hr="cd ~/dev/hr"
 alias gl="cd ~/dev/gl"
 alias personal="cd ~/dev/personal"
 
-if [ -x "$(command -v colorls)" ]; then
-    # sudo gem install colorls
-    alias ls="colorls"
-    alias la="colorls -al"
-fi
-
-if [ -x "$(command -v exa)" ]; then
-    # brew install exa
-    alias ls="exa"
-    alias la="exa --long --all --group"
-fi
-
 if [ -x "$(command -v eza)" ]; then
+    # brew install eza
     alias ls="eza --icons"
     alias la="eza --long --icons --all --group"
 fi
@@ -126,7 +116,7 @@ print_submodules_in_dir () {
     done
 }
 
-alias ghtoken="cat ~/.ghtoken | pbcopy"
+alias ghtoken="gh auth token | pbcopy"
 alias dive="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_API_VERSION=1.37 wagoodman/dive:latest"
 
 # Function to manage AI prompts

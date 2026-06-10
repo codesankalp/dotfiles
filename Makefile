@@ -6,6 +6,10 @@ help:
 	@echo "Usage:\n"
 	@sed -n 's/^##//p' $(MAKEFILE_LIST) | column -t -s ':' |  sed -e 's/^/ /'
 
+.PHONY: all
+## all: symlink every config
+all: alacritty tmux nvim zsh git wakatime claude
+
 .PHONY: alacritty
 ## alacritty: terminal emulator written in rust
 alacritty:
@@ -18,9 +22,13 @@ tmux:
 	@ln -fs "$(CURDIR)/config/tmux/.tmux.conf.local" $(HOME)/.tmux.conf.local;
 
 .PHONY: nvim
-## nvim: neovim
+## nvim: neovim (run nvim afterwards to finish plugin install)
 nvim:
-	@git clone https://github.com/NvChad/starter ~/.config/nvim && nvim;
+	@if [ ! -d "$(CONFIG_PATH)/nvim" ]; then \
+		git clone https://github.com/NvChad/starter $(CONFIG_PATH)/nvim; \
+	else \
+		echo "nvim config already present at $(CONFIG_PATH)/nvim"; \
+	fi
 
 .PHONY: nvim-update
 ## nvim-update: update neovim config
@@ -62,3 +70,8 @@ wakatime:
 claude:
 	@mkdir -p $(HOME)/.claude;
 	@ln -fs "$(CURDIR)/prompts/CLAUDE.md" $(HOME)/.claude/CLAUDE.md;
+
+.PHONY: lint
+## lint: run shellcheck on shell scripts
+lint:
+	@shellcheck scripts/*

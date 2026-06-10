@@ -1,10 +1,15 @@
 # Global Instructions
 
+> ⚠️ **NON-NEGOTIABLE — applies to EVERY response, no exceptions:**
+> The **first characters of every single reply must be the literal token `[codesankalp]`** on its own line, before any other text, tool call, or thinking summary.
+> This holds for short replies, follow-ups, error messages, clarifying questions — *everything*. There is no message too small to skip it.
+> Before sending any response, verify the first line is `[codesankalp]`. If you notice a previous reply missing it, stop and re-read this file — it means context drifted.
+
 These apply to **every** project. Project-specific `CLAUDE.md` files override anything here.
 
 ## Session rules (always)
 
-- **Start every response with `[codesankalp]`** as the first line. If it's ever missing, treat it as a signal that context is full or something is off — re-read the relevant files before continuing.
+- **Start every response with `[codesankalp]`** as the first line — see the non-negotiable rule at the top of this file.
 - **Read `AGENTS.md` / `agents.md` first** if one exists at the repo root or in the working directory — it carries repo-specific context. Also honor a project's own `CLAUDE.md`.
 
 ## Communication
@@ -34,6 +39,7 @@ These apply to **every** project. Project-specific `CLAUDE.md` files override an
 
 - Branch before committing if on the default branch (`main`/`master`). Don't commit or push unless asked.
 - Write focused commits with clear messages explaining *why*; group unrelated changes separately.
+- **Never add a `Co-Authored-By` trailer or any AI/Claude attribution to commits.**
 - For **GitLab** environment — use `glab` for MRs, pipelines, and issues. Default remote terminology is *Merge Request*, not *Pull Request*.
 - For **GitHub** environment — use `gh` for PRs, actions, and issues. Default remote terminology is *Pull Request*, not *Merge Request*.
 - Don't force-push shared branches or rewrite published history without confirming first.
