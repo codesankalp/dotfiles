@@ -8,13 +8,12 @@ help:
 
 .PHONY: all
 ## all: symlink every config
-all: alacritty tmux nvim zsh git wakatime claude
+all: wezterm tmux nvim zsh git wakatime claude
 
-.PHONY: alacritty
-## alacritty: terminal emulator written in rust
-alacritty:
-	@mkdir -p $(CONFIG_PATH)/alacritty;
-	@ln -fs "$(CURDIR)/config/alacritty/alacritty.toml" $(CONFIG_PATH)/alacritty/alacritty.toml;
+.PHONY: wezterm
+## wezterm: terminal emulator written in rust
+wezterm:
+	@ln -fs "$(CURDIR)/config/wezterm/wezterm.lua" ~/.wezterm.lua;
 
 .PHONY: tmux
 ## tmux: terminal multiplexer

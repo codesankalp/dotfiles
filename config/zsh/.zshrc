@@ -156,6 +156,5 @@ if [ -f '/Users/sankalp/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/sankalp
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/sankalp/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/sankalp/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Added by Antigravity
-export PATH="/Users/sankalp/.antigravity/antigravity/bin:$PATH"
-. "$HOME/.local/bin/env"
+# mise version manager
+eval "$(mise activate zsh)"

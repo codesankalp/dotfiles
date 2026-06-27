@@ -1,1 +1,32 @@
 set -g mouse on
+
+# mouse drag / double-click / triple-click selections go straight to the macOS clipboard
+tmux_conf_copy_to_os_clipboard=true
+
+# ── Rosé Pine Moon ────────────────────────────────────────────────────────────
+# base #232136  surface #2a273f  overlay #393552  muted #6e6a86  subtle #908caa
+# text #e0def4  love #eb6f92  gold #f6c177  rose #ea9a97  pine #3e8fb0
+# foam #9ccfd8  iris #c4a7e7  highlight-med #44415a  highlight-high #56526e
+
+# pane borders
+tmux_conf_theme_pane_border="#6e6a86"          # muted — inactive divider (visible)
+tmux_conf_theme_pane_active_border="#9ccfd8"   # foam  — active divider
+
+# status bar palette (oh-my-tmux colour slots → Rosé Pine roles)
+tmux_conf_theme_colour_1="#232136"   # base    — bar bg, window-list bg, current-window text
+tmux_conf_theme_colour_2="#44415a"   # hl-med  — pane base / focused
+tmux_conf_theme_colour_3="#908caa"   # subtle  — status text, inactive window text
+tmux_conf_theme_colour_4="#c4a7e7"   # iris    — current window bg, indicators, clock
+tmux_conf_theme_colour_5="#f6c177"   # gold    — message / mode bg
+tmux_conf_theme_colour_6="#232136"   # base    — left segment fg (on accent)
+tmux_conf_theme_colour_7="#e0def4"   # text    — left segment fg (light)
+tmux_conf_theme_colour_8="#232136"   # base    — left segment fg
+tmux_conf_theme_colour_9="#c4a7e7"   # iris    — left seg bg (session)
+tmux_conf_theme_colour_10="#eb6f92"  # love    — left seg bg
+tmux_conf_theme_colour_11="#3e8fb0"  # pine    — left seg bg
+tmux_conf_theme_colour_12="#908caa"  # subtle  — right seg fg
+tmux_conf_theme_colour_13="#e0def4"  # text    — right seg fg
+tmux_conf_theme_colour_14="#232136"  # base    — right seg fg (on light)
+tmux_conf_theme_colour_15="#2a273f"  # surface — right seg bg
+tmux_conf_theme_colour_16="#eb6f92"  # love    — right seg bg
+tmux_conf_theme_colour_17="#e0def4"  # text    — right seg bg (host, light)

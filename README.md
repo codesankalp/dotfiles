@@ -9,7 +9,7 @@ These are my personal configuration dotfiles for pretty much everything I use ac
 | Path | Description |
 | --- | --- |
 | `Brewfile` | Homebrew formulae, casks, and fonts |
-| `config/alacritty/` | Alacritty terminal config |
+| `config/wezterm/` | WezTerm terminal config |
 | `config/tmux/` | tmux overrides (`.tmux.conf.local`, on top of [gpakosz/.tmux](https://github.com/gpakosz/.tmux)) |
 | `config/zsh/` | `.zshrc`, Powerlevel10k theme, and shell aliases |
 | `config/git/` | global `.gitconfig` |
