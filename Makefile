@@ -8,7 +8,7 @@ help:
 
 .PHONY: all
 ## all: symlink every config
-all: wezterm tmux nvim zsh git wakatime claude
+all: wezterm tmux nvim zsh git wakatime agents
 
 .PHONY: wezterm
 ## wezterm: terminal emulator written in rust
@@ -64,11 +64,11 @@ wakatime:
 		echo "WakaTime API key configured in $(HOME)/.wakatime.cfg"; \
 	fi
 
-.PHONY: claude
-## claude: claude AI configuration
-claude:
+.PHONY: agents
+## agents: AI agent instructions (generic source, symlinked where each tool expects it)
+agents:
 	@mkdir -p $(HOME)/.claude;
-	@ln -fs "$(CURDIR)/prompts/CLAUDE.md" $(HOME)/.claude/CLAUDE.md;
+	@ln -fs "$(CURDIR)/prompts/AGENTS.md" $(HOME)/.claude/CLAUDE.md;
 
 .PHONY: lint
 ## lint: run shellcheck on shell scripts

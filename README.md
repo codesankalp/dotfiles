@@ -14,7 +14,7 @@ These are my personal configuration dotfiles for pretty much everything I use ac
 | `config/zsh/` | `.zshrc`, Powerlevel10k theme, and shell aliases |
 | `config/git/` | global `.gitconfig` |
 | `config/wakatime/` | WakaTime config (API key prompted on install) |
-| `prompts/` | AI prompts, symlinked to `~/.claude/CLAUDE.md` |
+| `prompts/` | AI agent instructions (`AGENTS.md`), symlinked to `~/.claude/CLAUDE.md` |
 | `scripts/` | bootstrap and GCP helper scripts |
 
 ## Install
