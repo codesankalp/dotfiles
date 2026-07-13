@@ -21,6 +21,8 @@ kexec(){
     # kexec <pod-pattern> [-c <container>] [cmd...]
     local pod
     pod=$(kpod "$1")
+    # multiple replicas can match; let fzf pick one
+    [[ $(echo "$pod" | wc -l) -gt 1 ]] && pod=$(echo "$pod" | fzf --layout=reverse)
     if [[ "$2" == "-c" ]]; then
         local container="$3"
         if [[ -z "$4" ]]; then
@@ -155,3 +157,5 @@ prompts() {
     ls "$prompt_dir"
   fi
 }
+
+alias c="claude --dangerously-skip-permissions"

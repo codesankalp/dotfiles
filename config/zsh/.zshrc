@@ -122,7 +122,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 
 export NVM_DIR="$HOME/.nvm"
 export GOPATH=$HOME/go
-export GOROOT="$(brew --prefix golang)/libexec"
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -143,8 +142,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 
-export PATH="$PATH:/opt/homebrew/bin"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -158,3 +156,10 @@ if [ -f '/Users/sankalp/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/s
 
 # mise version manager
 eval "$(mise activate zsh)"
+eval "$(direnv hook zsh)"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
