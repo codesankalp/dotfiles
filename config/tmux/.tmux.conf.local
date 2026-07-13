@@ -30,3 +30,7 @@ tmux_conf_theme_colour_14="#232136"  # base    — right seg fg (on light)
 tmux_conf_theme_colour_15="#2a273f"  # surface — right seg bg
 tmux_conf_theme_colour_16="#eb6f92"  # love    — right seg bg
 tmux_conf_theme_colour_17="#e0def4"  # text    — right seg bg (host, light)
+
+# status line content
+tmux_conf_theme_status_left=" ❐ #S | #{pretty_pane_current_path} "                   # session name + active pane cwd (home-shortened)
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized} , %R , %d %b | #{hostname} "  # state flags | time | date | host
