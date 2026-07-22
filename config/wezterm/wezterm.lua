@@ -6,6 +6,12 @@ config.initial_cols = 120
 config.initial_rows = 60
 
 config.color_scheme = 'rose-pine-moon'
+-- the builtin scheme's selection_bg matches the background, so selections
+-- are invisible; override with rose-pine-moon's highlight-high
+config.colors = {
+  selection_bg = '#56526e',
+  selection_fg = 'none', -- keep each cell's own text colour
+}
 config.max_fps = 120
 config.font = wezterm.font_with_fallback({
   'Hack Nerd Font',
@@ -29,6 +35,9 @@ config.macos_window_background_blur = 50
 config.font_size = 15.0
 config.window_frame.font_size = 13.0
 config.native_macos_fullscreen_mode = true
+-- required for Shift+Enter (and other modified keys) to reach apps that
+-- use the kitty keyboard protocol (e.g. multiline input in CLIs/TUI tools)
+config.enable_kitty_keyboard = true
 
 config.keys = {
   {
@@ -97,16 +106,24 @@ config.keys = {
 config.bypass_mouse_reporting_modifiers = 'SUPER'
 
 config.mouse_bindings = {
-  {
-    event = { Up = { streak = 1, button = 'Left' } },
-    mods = 'SUPER',
-    action = wezterm.action.OpenLinkAtMouseCursor,
-  },
-  -- swallow the paired Down event so the click isn't also sent to the pane
+  -- the default click/drag bindings with SUPER held, so CMD+drag selects
+  -- natively even under tmux; Down keeps the click from reaching the pane
   {
     event = { Down = { streak = 1, button = 'Left' } },
     mods = 'SUPER',
-    action = wezterm.action.Nop,
+    action = wezterm.action.SelectTextAtMouseCursor 'Cell',
+  },
+  {
+    event = { Drag = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = wezterm.action.ExtendSelectionToMouseCursor 'Cell',
+  },
+  -- a CMD+click without drag leaves an empty selection, so this still
+  -- opens the link under the cursor
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'ClipboardAndPrimarySelection',
   },
 }
 
