@@ -69,6 +69,8 @@ wakatime:
 agents:
 	@mkdir -p $(HOME)/.claude;
 	@ln -fs "$(CURDIR)/prompts/AGENTS.md" $(HOME)/.claude/CLAUDE.md;
+	@mkdir -p $(CONFIG_PATH)/opencode;
+	@ln -fs "$(CURDIR)/prompts/AGENTS.md" $(CONFIG_PATH)/opencode/AGENTS.md;
 
 .PHONY: lint
 ## lint: run shellcheck on shell scripts
