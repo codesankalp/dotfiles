@@ -61,6 +61,32 @@ alias gp="git push"
 alias gf="git fetch"
 alias gbr='git checkout $(git branch | fzf --layout=reverse) 2> /dev/null'
 
+# local, gitignored file holding real email addresses (see git-identity.local.example)
+[[ -f "${0:A:h}/git-identity.local" ]] && source "${0:A:h}/git-identity.local"
+
+# set repo-local git identity: set-git-identity work|personal
+set-git-identity(){
+  case "$1" in
+    work)
+      git config user.name "Sankalp"
+      git config user.email "${GIT_WORK_EMAIL:?set GIT_WORK_EMAIL in config/zsh/git-identity.local}"
+      ;;
+    personal)
+      git config user.name "Sankalp"
+      git config user.email "${GIT_PERSONAL_EMAIL:?set GIT_PERSONAL_EMAIL in config/zsh/git-identity.local}"
+      ;;
+    "")
+      echo "$(git config user.name) <$(git config user.email)>"
+      return
+      ;;
+    *)
+      echo "usage: set-git-identity [work|personal]"
+      return 1
+      ;;
+  esac
+  echo "✅ $(git config user.name) <$(git config user.email)>"
+}
+
 # fuzzy search command history (strip the ": <timestamp>:<elapsed>;" prefix, newest first)
 alias hgrep='sed "s/^: [0-9]*:[0-9]*;//" ~/.zsh_history | fzf --tac'
 

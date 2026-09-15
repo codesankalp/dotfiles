@@ -11,7 +11,7 @@ These are my personal configuration dotfiles for pretty much everything I use ac
 | `Brewfile` | Homebrew formulae, casks, and fonts |
 | `config/wezterm/` | WezTerm terminal config |
 | `config/tmux/` | tmux overrides (`.tmux.conf.local`, on top of [gpakosz/.tmux](https://github.com/gpakosz/.tmux)) |
-| `config/zsh/` | `.zshrc`, Powerlevel10k theme, and shell aliases |
+| `config/zsh/` | `.zshrc`, Powerlevel10k theme, and shell aliases (work/personal git emails prompted on install) |
 | `config/git/` | global `.gitconfig` |
 | `config/wakatime/` | WakaTime config (API key prompted on install) |
 | `prompts/` | AI agent instructions (`AGENTS.md`), symlinked to `~/.claude/CLAUDE.md` and `~/.config/opencode/AGENTS.md`; `context7.md` rule loaded by opencode via `instructions` |
@@ -29,6 +29,10 @@ cd ~/dotfiles
 ```
 
 Open `nvim` once afterwards to finish the NvChad plugin install.
+
+`make all` (or `make git-identity`) prompts for your work/personal git
+emails and writes them to the gitignored `config/zsh/git-identity.local`,
+read by the `set-git-identity` alias. Already-set values are skipped.
 
 ## Makefile targets
 

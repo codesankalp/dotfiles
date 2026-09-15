@@ -8,7 +8,7 @@ help:
 
 .PHONY: all
 ## all: symlink every config
-all: wezterm tmux nvim zsh git wakatime agents
+all: wezterm tmux nvim zsh git git-identity wakatime agents
 
 .PHONY: wezterm
 ## wezterm: terminal emulator written in rust
@@ -53,6 +53,23 @@ zsh:
 ## git: git
 git:
 	@ln -fs "$(CURDIR)/config/git/.gitconfig" $(HOME)/.gitconfig;
+
+.PHONY: git-identity
+## git-identity: prompt for work/personal git emails used by set-git-identity (zsh)
+git-identity:
+	@if [ ! -f "$(CURDIR)/config/zsh/git-identity.local" ]; then \
+		cp "$(CURDIR)/config/zsh/git-identity.local.example" "$(CURDIR)/config/zsh/git-identity.local"; \
+	fi
+	@if grep -q "you@work-example.com" "$(CURDIR)/config/zsh/git-identity.local"; then \
+		read -p "Enter work git email: " email; \
+		sed -i '' "s/you@work-example.com/$$email/" "$(CURDIR)/config/zsh/git-identity.local"; \
+		echo "Work git email configured"; \
+	fi
+	@if grep -q "you@personal-example.com" "$(CURDIR)/config/zsh/git-identity.local"; then \
+		read -p "Enter personal git email: " email; \
+		sed -i '' "s/you@personal-example.com/$$email/" "$(CURDIR)/config/zsh/git-identity.local"; \
+		echo "Personal git email configured"; \
+	fi
 
 .PHONY: wakatime
 ## wakatime: wakatime

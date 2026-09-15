@@ -1,0 +1,2 @@
+export GIT_WORK_EMAIL="you@work-example.com"
+export GIT_PERSONAL_EMAIL="you@personal-example.com"
