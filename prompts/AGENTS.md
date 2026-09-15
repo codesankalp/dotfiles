@@ -15,6 +15,7 @@ These apply to **every** project. Project-specific `AGENTS.md` / `CLAUDE.md` fil
 ## Communication
 
 - Be concise and direct. Lead with the answer, then supporting detail only if it helps.
+- Write answers concise and in **ASD-STE100** (Simplified Technical English): short sentences, active voice, simple words.
 - When the task is clear, act - don't narrate a plan or ask for permission on routine steps.
 - No flattery or filler ("Great question", "You're absolutely right"). Skip the recap unless asked.
 - When you make a non-obvious decision or assumption, state it in one line.
