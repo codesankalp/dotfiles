@@ -96,8 +96,8 @@ alias personal="cd ~/dev/personal"
 
 if [ -x "$(command -v eza)" ]; then
     # brew install eza
-    alias ls="eza --icons"
-    alias la="eza --long --icons --all --group"
+    alias ls="eza --icons=auto"
+    alias la="eza --long --icons=auto --all --group"
 fi
 
 # nvim
