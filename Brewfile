@@ -2,6 +2,8 @@
 tap 'derailed/k9s'
 tap 'eugenmayer/dockersync'
 tap 'hashicorp/tap'
+tap 'silverstein/tap'
+tap 'anomalyco/tap'
 
 # CLI tools
 brew 'coreutils'
@@ -46,6 +48,7 @@ brew 'hashicorp/tap/packer'
 brew 'eza'
 brew 'go-task'
 brew 'helm'
+brew 'anomalyco/tap/opencode'
 
 # Casks
 cask 'hiddenbar'
@@ -65,6 +68,8 @@ cask 'flux-app'
 cask 'caffeine'
 cask 'shottr'
 cask 'meetingbar'
+cask 'silverstein/tap/minutes'
+cask 'claude-code'
 
 # Fonts
 cask 'font-agave-nerd-font'
